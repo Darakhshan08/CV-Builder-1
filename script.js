@@ -1,127 +1,188 @@
-var _a;
+// Define HTML element types
+var cvForm = document.getElementById('cvForm');
+var nameInput = document.getElementById('name');
+var emailInput = document.getElementById('email');
+var phoneInput = document.getElementById('phone');
+var ageInput = document.getElementById('age');
+var aboutInput = document.getElementById('about');
+var objectiveInput = document.getElementById('objective');
+var profileImageInput = document.getElementById('profileImage');
+var cvName = document.getElementById('cvName');
+var cvEmail = document.getElementById('cvEmail');
+var cvPhone = document.getElementById('cvPhone');
+var cvAge = document.getElementById('cvAge');
+var cvAbout = document.getElementById('cvAbout');
+var cvObjective = document.getElementById('cvObjective');
+var cvEducation = document.getElementById('cvEducation');
+var cvSkills = document.getElementById('cvSkills');
+var cvHobbies = document.getElementById('cvHobbies');
+var resumeContainer = document.getElementById('resumeContainer');
+var formContainer = document.querySelector('.form-container');
+var toggleBtn = document.getElementById('toggleBtn');
+var editBtn = document.getElementById('editBtn');
 // Handle form submission
-(_a = document.getElementById('cvForm')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', function (event) {
-    var _a, _b;
+cvForm === null || cvForm === void 0 ? void 0 : cvForm.addEventListener('submit', function (event) {
+    var _a, _b, _c, _d;
     event.preventDefault();
     // Get form values
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    var phone = document.getElementById('phone').value;
-    var age = document.getElementById('age').value;
-    var about = document.getElementById('about').value;
-    var objective = document.getElementById('objective').value;
-    var skills = document.getElementById('skills').value.split(',');
-    var hobbies = document.getElementById('hobbies').value.split(',');
-    var education = document.getElementById('education').value.split(',');
+    var name = (nameInput === null || nameInput === void 0 ? void 0 : nameInput.value) || '';
+    var email = (emailInput === null || emailInput === void 0 ? void 0 : emailInput.value) || '';
+    var phone = (phoneInput === null || phoneInput === void 0 ? void 0 : phoneInput.value) || '';
+    var age = (ageInput === null || ageInput === void 0 ? void 0 : ageInput.value) || '';
+    var about = (aboutInput === null || aboutInput === void 0 ? void 0 : aboutInput.value) || '';
+    var objective = (objectiveInput === null || objectiveInput === void 0 ? void 0 : objectiveInput.value) || '';
+    var skills = ((_a = document.getElementById('skills')) === null || _a === void 0 ? void 0 : _a.value.split(',')) || [];
+    var hobbies = ((_b = document.getElementById('hobbies')) === null || _b === void 0 ? void 0 : _b.value.split(',')) || [];
+    var education = ((_c = document.getElementById('education')) === null || _c === void 0 ? void 0 : _c.value.split(',')) || [];
     // Populate CV fields
-    document.getElementById('cvName').textContent = name;
-    document.getElementById('cvEmail').textContent = "Email: ".concat(email);
-    document.getElementById('cvPhone').textContent = "Phone: ".concat(phone);
-    document.getElementById('cvAge').textContent = "Age: ".concat(age);
-    document.getElementById('cvAbout').textContent = about;
-    document.getElementById('cvObjective').textContent = objective;
+    if (cvName)
+        cvName.textContent = name;
+    if (cvEmail)
+        cvEmail.textContent = "Email: ".concat(email);
+    if (cvPhone)
+        cvPhone.textContent = "Phone: ".concat(phone);
+    if (cvAge)
+        cvAge.textContent = "Age: ".concat(age);
+    if (cvAbout)
+        cvAbout.textContent = about;
+    if (cvObjective)
+        cvObjective.textContent = objective;
     // Dynamically add education
-    var educationList = document.getElementById('cvEducation');
-    educationList.innerHTML = ''; // Clear existing content
-    education.forEach(function (item) {
-        var li = document.createElement('li');
-        li.textContent = item.trim();
-        educationList.appendChild(li);
-    });
+    if (cvEducation) {
+        cvEducation.innerHTML = '';
+        education.forEach(function (item) {
+            var li = document.createElement('li');
+            li.textContent = item.trim();
+            cvEducation.appendChild(li);
+        });
+    }
     // Add skills dynamically
-    var skillsList = document.getElementById('cvSkills');
-    skillsList.innerHTML = ''; // Clear existing content
-    skills.forEach(function (skill) {
-        var li = document.createElement('li');
-        li.textContent = skill.trim();
-        skillsList.appendChild(li);
-    });
+    if (cvSkills) {
+        cvSkills.innerHTML = '';
+        skills.forEach(function (skill) {
+            var li = document.createElement('li');
+            li.textContent = skill.trim();
+            cvSkills.appendChild(li);
+        });
+    }
     // Add hobbies dynamically
-    var hobbiesList = document.getElementById('cvHobbies');
-    hobbiesList.innerHTML = ''; // Clear existing content
-    hobbies.forEach(function (hobby) {
-        var li = document.createElement('li');
-        li.textContent = hobby.trim();
-        hobbiesList.appendChild(li);
-    });
+    if (cvHobbies) {
+        cvHobbies.innerHTML = '';
+        hobbies.forEach(function (hobby) {
+            var li = document.createElement('li');
+            li.textContent = hobby.trim();
+            cvHobbies.appendChild(li);
+        });
+    }
     // Handle image update
-    var imageFile = (_b = (_a = document.getElementById('profileImage')) === null || _a === void 0 ? void 0 : _a.files) === null || _b === void 0 ? void 0 : _b[0];
+    var imageFile = (_d = profileImageInput === null || profileImageInput === void 0 ? void 0 : profileImageInput.files) === null || _d === void 0 ? void 0 : _d[0];
     if (imageFile) {
         var reader = new FileReader();
         reader.onload = function (e) {
             var _a;
             var img = document.getElementById('cvProfileImage');
-            img.src = (_a = e.target) === null || _a === void 0 ? void 0 : _a.result;
+            if (img && ((_a = e.target) === null || _a === void 0 ? void 0 : _a.result))
+                img.src = e.target.result.toString();
         };
         reader.readAsDataURL(imageFile);
     }
     // Hide the form and show the CV
-    document.querySelector('.form-container').style.display = 'none';
-    document.getElementById('resumeContainer').style.display = 'block';
-    document.getElementById('toggleBtn').style.display = 'block';
+    if (formContainer)
+        formContainer.style.display = 'none';
+    if (resumeContainer)
+        resumeContainer.style.display = 'block';
+    if (toggleBtn)
+        toggleBtn.style.display = 'block';
 });
 // Toggle CV visibility
 function toggleResume() {
-    var resume = document.getElementById('resumeContainer');
-    var toggleBtn = document.getElementById('toggleBtn');
-    if (resume.style.display === 'none' || resume.style.display === '') {
-        resume.style.display = 'block';
+    if (!resumeContainer || !toggleBtn)
+        return;
+    if (resumeContainer.style.display === 'none' || resumeContainer.style.display === '') {
+        resumeContainer.style.display = 'block';
         toggleBtn.textContent = 'Hide CV';
     }
     else {
-        resume.style.display = 'none';
+        resumeContainer.style.display = 'none';
         toggleBtn.textContent = 'Show CV';
     }
 }
 // Edit Resume
 function editResume() {
-    // Show the form and hide the CV
-    document.querySelector('.form-container').style.display = 'block';
-    document.getElementById('resumeContainer').style.display = 'none';
-    document.getElementById('toggleBtn').style.display = 'none';
+    if (formContainer)
+        formContainer.style.display = 'block';
+    if (resumeContainer)
+        resumeContainer.style.display = 'none';
+    if (toggleBtn)
+        toggleBtn.style.display = 'none';
 }
-
+// // Share Resume
+// function shareResume(): void {
+//     const name = nameInput?.value.replace(/\s+/g, '').toLowerCase() || 'resume';
+//     const userURL = `https://${name}.vercel.app`;
+//     navigator.clipboard
+//         .writeText(userURL)
+//         .then(() => alert(`Resume link copied to clipboard: ${userURL}`))
+//         .catch((error) => console.error('Copy failed', error));
+// }
+// Share Resume
 function shareResume() {
-    const name = document.getElementById("name").value.replace(/\s+/g, '').toLowerCase();
-    const userURL = `https://${name}.vercel.app/resume`;
-    navigator.clipboard.writeText(userURL)
-        .then(() => alert("Resume link copied to clipboard: " + userURL))
-        .catch(error => console.error("Copy failed", error));
+    var nameInput = document.getElementById('name');
+    var name = (nameInput === null || nameInput === void 0 ? void 0 : nameInput.value.replace(/\s+/g, '').toLowerCase()) || 'resume';
+    var userURL = "https://".concat(name, ".vercel.app");
+    navigator.clipboard
+        .writeText(userURL)
+        .then(function () {
+        // Display an alert when the link is copied
+        alert("Resume link copied to clipboard: ".concat(userURL));
+        // Check if a shareable link already exists, if not, create one
+        var buttonContainer = document.querySelector('.button-container');
+        var shareableLinkDiv = document.getElementById('shareableLink');
+        if (!shareableLinkDiv) {
+            shareableLinkDiv = document.createElement('div');
+            shareableLinkDiv.id = 'shareableLink';
+            shareableLinkDiv.style.marginTop = '10px';
+            shareableLinkDiv.style.textAlign = 'center';
+            shareableLinkDiv.style.fontSize = '14px';
+            shareableLinkDiv.style.color = 'blue';
+            buttonContainer.appendChild(shareableLinkDiv);
+        }
+        // Update the content of the shareable link
+        shareableLinkDiv.innerHTML = "\n                <p>Shareable Link: <a href=\"".concat(userURL, "\" target=\"_blank\">").concat(userURL, "</a></p>\n            ");
+    })
+        .catch(function (error) { return console.error('Copy failed', error); });
 }
-
-// Download Resume as PDF
-
 function downloadPDF() {
-    // Get the buttons to hide
-    const editBtn = document.getElementById("editBtn");
-    const shareBtn = document.querySelector("button[onclick='shareResume()']");
-    const downloadBtn = document.querySelector("button[onclick='downloadPDF()']");
-    
+    var shareBtn = document.querySelector("button[onclick='shareResume()']");
+    var downloadBtn = document.querySelector("button[onclick='downloadPDF()']");
     // Hide the buttons
-    editBtn.style.display = "none";
-    shareBtn.style.display = "none";
-    downloadBtn.style.display = "none";
-    
-    const resumeContainer = document.getElementById("resumeContainer");
-    const name = document.getElementById("name").value || "resume"; // Use CV name if provided
-
-    const options = {
-        margin:       0.5,
-        filename:     `${name}_resume.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'A4', orientation: 'portrait' }
-    };
-
-    // Generate and download the PDF
-    html2pdf()
-        .set(options)
-        .from(resumeContainer)
-        .save()
-        .then(() => {
+    if (editBtn)
+        editBtn.style.display = 'none';
+    if (shareBtn)
+        shareBtn.style.display = 'none';
+    if (downloadBtn)
+        downloadBtn.style.display = 'none';
+    if (resumeContainer) {
+        var name_1 = (nameInput === null || nameInput === void 0 ? void 0 : nameInput.value) || 'resume'; // Use CV name if provided
+        var options = {
+            margin: 0.5,
+            filename: "".concat(name_1, "_resume.pdf"),
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' },
+        };
+        html2pdf()
+            .set(options)
+            .from(resumeContainer)
+            .save()
+            .then(function () {
             // Show the buttons again after PDF is generated
-            editBtn.style.display = "inline-block";
-            shareBtn.style.display = "inline-block";
-            downloadBtn.style.display = "inline-block";
+            if (editBtn)
+                editBtn.style.display = 'inline-block';
+            if (shareBtn)
+                shareBtn.style.display = 'inline-block';
+            if (downloadBtn)
+                downloadBtn.style.display = 'inline-block';
         });
+    }
 }
